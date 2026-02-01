@@ -1,20 +1,15 @@
-import { useAnchorWallet, useConnection } from "@solana/wallet-adapter-react";
-import { useMemo } from "react";
+import { AnchorProvider } from "@coral-xyz/anchor";
+import { connection } from "./connection";
 
+export function getProvider(wallet: any) {
+  if (!wallet) return null;
 
-export function useProvider(){
-    const {connection} = useConnection();
-    const wallet = useAnchorWallet();
-
-    const provider = useMemo(()=>{
-        if(!wallet) return null;
-        return {
-            connection,
-            wallet,
-            opts: {
-                preflightCommitment: "processed" as const,
-                commitment: "confirmed",
-            },
-        };
-    },[connection, wallet]);
+  return new AnchorProvider(
+    connection,
+    wallet,
+    {
+      preflightCommitment: "processed",
+      commitment: "confirmed",
+    }
+  );
 }

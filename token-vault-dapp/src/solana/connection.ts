@@ -1,8 +1,7 @@
-import { Connection } from "@solana/web3.js";
+import { Connection, clusterApiUrl } from "@solana/web3.js";
 import { NETWORK } from "./constants";
 
-export function useConnection() {
-    const connection = new Connection(
-        NETWORK, 'confirmed'
-    );
-}
+export const connection = new Connection(
+  clusterApiUrl(NETWORK),
+  "confirmed"
+);
